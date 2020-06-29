@@ -1,3 +1,5 @@
+1) USERSTORE TABLE=====================================
+
 -- Table: public.userstore
 
 -- DROP TABLE public.userstore;
@@ -14,4 +16,32 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE public.userstore
+    OWNER to postgres;
+
+2)PATIENTSTATUS TABLE=======================================
+
+-- Table: public.patientstatus
+
+-- DROP TABLE public.patientstatus;
+
+CREATE TABLE public.patientstatus
+(
+    ws_pat_id numeric(9,0) NOT NULL,
+    ws_ssn numeric(9,0) NOT NULL,
+    ws_pat_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    ws_age numeric(3,0) NOT NULL,
+    ws_doj date NOT NULL,
+    ws_rtype character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    ws_adrs character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    state character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    city character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    status character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT patientstatus_pkey PRIMARY KEY (ws_pat_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.patientstatus
     OWNER to postgres;
