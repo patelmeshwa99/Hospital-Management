@@ -14,7 +14,7 @@
 <style>
 	
 .container {
-	height: 130px;
+	height: 100px;
 }
 	
 .rounded {
@@ -29,12 +29,18 @@ body{
 
 img {
 	float: left;
-    max-width: 100%;
-    max-height: 100%;
-    margin-right: 5%;
+    max-width: 120%;
+    max-height: 120%;
+    margin: 0;
+  	position: relative;
+  	margin-right: 5%;
+  	margin-left: -0.6%;
+  	top: 50%;
+  	-ms-transform: translateY(-50%);
+  	transform: translateY(-50%);
 }
 	
-h1{
+h2{
 	margin: 0;
   	position: relative;
   	top: 45%;
@@ -51,13 +57,13 @@ h1{
 }		
 
 @media only screen and (max-width: 993px) {
-   	h1 {
+   	h2 {
     	font-size: 1.9em;
     }
 }
 
 @media only screen and (max-width: 770px) {
-   	h1 {
+   	h2 {
     	font-size: 1.5em;
     }
 }
@@ -102,7 +108,7 @@ function validate() {
 	</div>
 	<div class="container rounded p-3 my-3 bg-dark text-white">
 		<img src="images/download.png" alt="logo" />
-  		<h1>ABC Hospital Management System</h1>
+  		<h2>ABC Hospital Management System</h2>
   	</div>
 	<center>
 		<div class="card adv" style="width:400px">
@@ -111,7 +117,7 @@ function validate() {
 			    	<div class="card-body" style="font-size: 1.2em;">Login</div>
 			  	</div>
 				<div class="card-body">
-				    <form id="form" action="" onsubmit="validate()" method="POST">
+				    <form id="form" action="LoginServlet" onsubmit="validate()" method="POST">
 						<input type="text" class="form-control" id="uname" placeholder="Username" name="uname"><br><div id="extra"></div>
 					  	<input type="password" class="form-control" id="pwd" placeholder="Password" name="pswd"><br><div class="text-center"> 
 				      	<button type="submit" class="btn btn-outline-dark">Login</button>

@@ -1,0 +1,17 @@
+-- Table: public.userstore
+
+-- DROP TABLE public.userstore;
+
+CREATE TABLE public.userstore
+(
+    login character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    password character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    "timestamp" timestamp without time zone
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.userstore
+    OWNER to postgres;
