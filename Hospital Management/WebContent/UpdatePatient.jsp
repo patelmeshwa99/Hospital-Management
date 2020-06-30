@@ -56,20 +56,28 @@ body{
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script>
-function check_ssn() {
-	const ssnId = document.getElementById("ssn").value;
-	if(ssnId.length==9){
-		document.getElementById("myForm").action = "CreatePatient";
-		return true;
-	}
-		alert("SSN should be 9 characters long!!");
-		reset();
-		
-}
 
-	function reset(){
-	  document.getElementById("myForm").reset();
-	}
+	$(document).ready(function(){
+		$("#get").click(function(){
+			var form = $('#myForm');
+			$.ajax({
+				type: 'POST',
+				data: form.serialize(),
+				url: 'SearchPatient',
+				success: function(result) {
+					$("#pat_id").val(result.patient_id);
+					$("#name").val(result.name);
+					$("#age").val(result.age);
+					$("#address").val(result.address);
+					$("#bed").val(result.bed);
+					$("#date").val(result.date);
+					$("#state").val(result.state);
+					$("#city").val(result.city);
+				}
+			});
+		});
+	});
+	
 
 
 </script>
@@ -89,27 +97,28 @@ function check_ssn() {
     <div class="row">
 	    <div class="col-3"></div>
 	    <div class="col-6">
-	    <center><h3 style="margin-top: -20px">Patient Registration</h3></center><br>
-	    	<form id="myForm" action="CreatePatient" method="POST" onsubmit="check_ssn()">
+	    <center><h3 style="margin-top: -20px">Update Patient</h3></center><br>
+	    	<form id="myForm" action="SearchPatient" method='POST'>
 		    	<table class="table table-borderless">
 				    <tr>
-				      <th scope="col" class="first">Patient SSN Id: <span style="color:red">*</span></th>
-				      <th scope="col"><input style="width: 100%" type="number" id="ssn" name="ssnId" min="100000000" max="999999999" required></th>
+				      <th scope="col" class="first">Patient Id: <span style="color:red">*</span></th>
+				      <th scope="col"><input style="width: 100%" type="number" id="pat_id" name="pat_id" min="100000000" max="999999999" required></th>
+				      <th><button type="button" style="width: 100%; line-height: 15px;" id="get" name="get" class="btn btn-dark">Get</button></th>
 				    </tr>
 				    <tr>
-				      <th scope="col" class="first">Patients Name: <span style="color:red">*</span></th>
-				      <th scope="col"><input style="width: 100%" type="text" id="fname" name="name" required></th>
+				      <th scope="col" class="first">Patients Name: </th>
+				      <th scope="col"><input style="width: 100%" type="text" id="name" name="name"></th>
 				    </tr>
 				    <tr>
-				      <th scope="col" class="first">Patient Age: <span style="color:red">*</span></th>
-				      <th scope="col"><input style="width: 100%" type="number" id="fname" name="age" min="1" max="150" required></th>
+				      <th scope="col" class="first">Patient Age: </th>
+				      <th scope="col"><input style="width: 100%" type="number" id="age" name="age" min="1" max="150"></th>
 				    </tr>
 				    <tr>
-				      <th scope="col" class="first">Date of Admission: <span style="color:red">*</span></th>
-				      <th scope="col"><input style="width: 100%" type="date" id="date" name="date" required></th>
+				      <th scope="col" class="first">Date of Admission: </th>
+				      <th scope="col"><input style="width: 100%" type="date" id="date" name="date"></th>
 				    </tr>
 				    <tr>
-				      <th scope="col" class="first">Type of bed: <span style="color:red">*</span></th>
+				      <th scope="col" class="first">Type of bed: </th>
 				      <th scope="col">
 				      	<select id="bed" name="bed">
 						    <option value="General ward">General ward</option>
@@ -119,11 +128,11 @@ function check_ssn() {
 				      </th>
 				    </tr>
 				    <tr>
-				      <th scope="col" class="first">Address: <span style="color:red">*</span></th>
-				      <th scope="col"><textarea style="width: 100%" type="text" id="fname" name="address" required></textarea></th>
+				      <th scope="col" class="first">Address: </th>
+				      <th scope="col"><textarea style="width: 100%" type="text" id="address" name="address"></textarea></th>
 				    </tr>
 				    <tr>
-				      <th scope="col" class="first">State: <span style="color:red">*</span></th>
+				      <th scope="col" class="first">State: </th>
 				      <th scope="col">
 					      <select id="state" name="state">
 						    <option value="Gujarat">Gujarat</option>
@@ -134,9 +143,9 @@ function check_ssn() {
 					 </th>
 				    </tr>
 				    <tr>
-				      <th scope="col" class="first">City: <span style="color:red">*</span></th>
+				      <th scope="col" class="first">City: </th>
 				      <th scope="col">
-				      	<select id="cars" name="city">
+				      	<select id="city" name="city">
 						    <option value="Ahmedabad">Ahmedabad</option>
 						    <option value="Gandhinagar">Gandhinagar</option>
 						    <option value="Rajkot">Rajkot</option>
@@ -147,8 +156,8 @@ function check_ssn() {
 				    <tr><th colspan="2"><span style="color: red">(*)Fields are mandatory</span></th></tr> 
 				</table>
 				<div class="row">
-					<div class="col-6"><button type="submit" style="width: 100%" class="btn btn-dark">Submit</button></div>
-					<div class="col-6"><button type="button" style="width: 100%" onclick="reset()" class="btn btn-dark adv">Reset</button></div>
+					<div class="col-6"><button type="submit" style="width: 100%" id="update" name="update" class="btn btn-dark">Update</button></div>
+					<div class="col-6"><button type="submit" style="width: 100%" id="delete" name="delete" class="btn btn-dark">Delete</button></div>
 				</div>
 			</form>
 	    </div>
