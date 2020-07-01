@@ -12,7 +12,7 @@ import Util.ConnectionManager;
 public class PatientDao {
 	
 	ConnectionManager cm = new ConnectionManager();
-	static int patient_id = 100000004;
+	static int patient_id = 100000005;
 	
 	public PatientDao(){
 		patient_id += 1;

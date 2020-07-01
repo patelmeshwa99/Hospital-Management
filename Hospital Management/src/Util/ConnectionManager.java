@@ -19,7 +19,7 @@ public static Connection getConnection() {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	
+			System.out.println("connection");
 			return con;
 	}
 	

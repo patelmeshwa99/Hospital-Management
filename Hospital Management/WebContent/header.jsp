@@ -80,6 +80,7 @@ nav{
 			        <a class="dropdown-item" href="CreatePatient.jsp">Register Patient</a>
 			        <a class="dropdown-item" href="UpdatePatient.jsp">Update Patient</a>
 			        <a class="dropdown-item" href="UpdatePatient.jsp">Delete Patient</a>
+			        <a class="dropdown-item" href="ViewPatients.jsp">View Patient</a>
 			      </div>
 			    </li>
 			    <li class="nav-item dropdown">

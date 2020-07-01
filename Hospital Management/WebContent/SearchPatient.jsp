@@ -58,7 +58,7 @@ body{
 <script>
 
 	$(document).ready(function(){
-		$("#get").click(function(){
+		$("#search").click(function(){
 			var form = $('#myForm');
 			$.ajax({
 				type: 'POST',
@@ -73,8 +73,10 @@ body{
 					$("#date").val(result.date);
 					$("#state").val(result.state);
 					$("#city").val(result.city);
+					
 				}
 			});
+			alert();
 		});
 	});
 	
@@ -97,27 +99,27 @@ body{
     <div class="row">
 	    <div class="col-3"></div>
 	    <div class="col-6">
-	    <center><h3 style="margin-top: -20px">Update/Delete Patient</h3></center><br>
+	    <center><h3 style="margin-top: -20px">Search Patient</h3></center><br>
 	    	<form id="myForm" action="UpdatePatient" method='POST'>
 		    	<table class="table table-borderless">
 				    <tr>
 				      <th scope="col" class="first">Patient Id: <span style="color:red">*</span></th>
 				      <th scope="col"><input style="width: 100%" type="number" id="pat_id" name="pat_id" min="100000000" max="999999999" required></th>
-				      <th><button type="button" style="width: 100%; line-height: 15px;" id="get" name="get" class="btn btn-dark">Get</button></th>
+				      <th style="display: none"><button type="button" style="width: 100%; line-height: 15px;" id="get" name="get" class="btn btn-dark">Get</button></th>
 				    </tr>
-				    <tr>
+				    <tr style="display: none">
 				      <th scope="col" class="first">Patients Name: </th>
 				      <th scope="col"><input style="width: 100%" type="text" id="name" name="name"></th>
 				    </tr>
-				    <tr>
+				    <tr style="display: none">
 				      <th scope="col" class="first">Patient Age: </th>
 				      <th scope="col"><input style="width: 100%" type="number" id="age" name="age" min="1" max="150"></th>
 				    </tr>
-				    <tr>
+				    <tr style="display: none">
 				      <th scope="col" class="first">Date of Admission: </th>
 				      <th scope="col"><input style="width: 100%" type="date" id="date" name="date"></th>
 				    </tr>
-				    <tr>
+				    <tr style="display: none">
 				      <th scope="col" class="first">Type of bed: </th>
 				      <th scope="col">
 				      	<select id="bed" name="bed">
@@ -127,11 +129,11 @@ body{
 						  </select>
 				      </th>
 				    </tr>
-				    <tr>
+				    <tr style="display: none">
 				      <th scope="col" class="first">Address: </th>
 				      <th scope="col"><textarea style="width: 100%" type="text" id="address" name="address"></textarea></th>
 				    </tr>
-				    <tr>
+				    <tr style="display: none">
 				      <th scope="col" class="first">State: </th>
 				      <th scope="col">
 					      <select id="state" name="state">
@@ -142,7 +144,7 @@ body{
 						  </select>
 					 </th>
 				    </tr>
-				    <tr>
+				    <tr style="display: none">
 				      <th scope="col" class="first">City: </th>
 				      <th scope="col">
 				      	<select id="city" name="city">
@@ -155,10 +157,7 @@ body{
 				    </tr>
 				    <tr><th colspan="2"><span style="color: red">(*)Fields are mandatory</span></th></tr> 
 				</table>
-				<div class="row">
-					<div class="col-6"><button type="submit" style="width: 100%" id="update" name="update" class="btn btn-dark">Update</button></div>
-					<div class="col-6"><button type="submit" style="width: 100%" id="delete" name="delete" class="btn btn-dark">Delete</button></div>
-				</div>
+				<center><button type="submit" style="width: 40%;margin-top: 40px" id="search" name="search" class="btn btn-dark">Search</button></center>
 			</form>
 	    </div>
     	<div class="col-3"></div>

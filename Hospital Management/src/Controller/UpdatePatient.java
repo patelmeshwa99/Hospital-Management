@@ -16,13 +16,13 @@ import Bean.PatientBean;
 import Service.PatientService;
 
 
-@WebServlet("/SearchPatient")
+@WebServlet("/UpdatePatient")
 public class UpdatePatient extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		if(request.getParameter("pat_id")==null || request.getParameter("pat_id").equals("")) 
-		{
+		{	
 			RequestDispatcher rd = request.getRequestDispatcher("UpdatePatient.jsp");
 			rd.include(request, response);
 		}
@@ -49,7 +49,7 @@ public class UpdatePatient extends HttpServlet {
 			        json.put("address", pb_old.getAddress());
 			        json.put("state", pb_old.getState());
 			        json.put("city", pb_old.getCity());
-					
+			        System.out.println("innn");
 					response.getWriter().write(json.toString());	
 				}
 			}
