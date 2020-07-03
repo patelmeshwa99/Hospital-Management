@@ -18,10 +18,10 @@
 	PreparedStatement ps;
 	ResultSet rs;
 	JSONArray list = new JSONArray();
-	String sql = "select * from patientstatus";
+	String sql = "select * from patientstatus where status=?";
 	
 	PreparedStatement st = con.prepareStatement(sql);
-//	st.setString(1, "Active");
+	st.setString(1, "Active");
 	rs = st.executeQuery();
 	while(rs.next())
 	{

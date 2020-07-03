@@ -6,7 +6,6 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <style>
-
 label {
 	font-weight: bold;
 }
@@ -46,26 +45,23 @@ body{
 <script>
 
 	$(document).ready(function(){
-		$("#search").click(function(){
+		$("#get").click(function(){
 			var form = $('#myForm');
 			$.ajax({
 				type: 'POST',
 				data: form.serialize(),
-				url: 'SearchPatient',
+				url: 'UpdatePatient',
 				success: function(result) {
 					$("#pat_id").val(result.patient_id);
 					$("#name").val(result.name);
-					console.log(result.name);
 					if(result.name==undefined){
-						alert("Patient not found!!");		
+						alert("Patient not found!!");
 					}
-					else{
-						document.getElementById("search").style.visibility = 'hidden';
-						$( "#search" ).remove();
-						document.getElementById("pat_id").style.width = '100%';
+					else
+					{
 						$('#myForm input').attr('readonly', 'readonly');
 						$('#myForm textarea').attr('readonly', 'readonly');
-						$('#myForm select').attr("disabled", true); 
+						$('#myForm select').attr("disabled", true); 	
 					}
 					$("#age").val(result.age);
 					$("#address").val(result.address);
@@ -73,19 +69,10 @@ body{
 					$("#date").val(result.date);
 					$("#state").val(result.state);
 					$("#city").val(result.city);
-					
-				},
-				  error: function(e, ts, et) { alert(ts) }
-
+				}
 			});
-			if(document.getElementById("pat_id").value.length != 0){
-				for (var i = 1; i <= 7; i++) {
-					document.getElementById("myTable").rows[i].style.display = '';
-				}	
-			}
 		});
 	});
-	
 
 
 </script>
@@ -101,17 +88,17 @@ body{
 
 <%@ include file = "header.jsp" %>
 
-
-<center><h3 style="margin-top: 40px">Search Patient</h3></center><br>
+<center><h3 style="margin-top: 40px">Delete Patient</h3></center><br>
 	<div class="container" style="width: 40%; margin-top:10px; margin-bottom:30px">
 	    <form id="myForm" action="UpdatePatient" method="POST" onsubmit="check_ssn()">
 		    <div class="form-group">
 		      <label for="pat_id">Patient Id: <span style="color:red">*</span></label>
 		      <div class="container">
-		      <div class="row">
+		        <div class="row">
 			      <input type="number" style="width:75%" id="pat_id" name="pat_id" min="100000000" max="999999999" class="form-control" required>
-			      <button type="button" style="width: 20%; margin-left: 10px;float:right; line-height: 15px;" id="search" name="search" class="btn btn-dark">Get</button>
-			   </div></div>
+			      <button type="button" style="width: 20%; margin-left: 10px;float:right; line-height: 15px;" id="get" name="get" class="btn btn-dark">Get</button>
+			    </div>
+			  </div>
 		    </div>
 		    <div class="form-group">
 			  <label for="name">Patient Name:</label>
@@ -119,7 +106,7 @@ body{
 		    </div>
 		    <div class="form-group">
 			  <label for="age">Patient Age:</label>
-		      <input type="number" id="age" name="age" class="form-control" required>
+		      <input type="number" id="age" name="age" class="form-control" min="1" max="150" required>
 		    </div>
 		    <div class="form-group">
 		      <label for="date">Date of Admission:</label>
@@ -152,43 +139,41 @@ body{
 				<option value="Gandhinagar">Gandhinagar</option>
 				<option value="Surat">Surat</option>
 	 		  </select>
-		    </div>		    
+		    </div>
+		    <center><button type="submit" style="width: 40%;margin-top: 40px" id="delete" name="delete" class="btn btn-dark">Delete</button></center>
+		    <%HttpSession sess = request.getSession(); sess.setAttribute("delete", "delete"); sess.setAttribute("search", ""); sess.setAttribute("update", ""); %>
+		    
    	    </form>
 	</div>
-
-
-
-
-
+	
 <!-- 
 
-
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid" style="margin-top:20px;">
   <div class="container">
     <div class="row">
 	    <div class="col-3"></div>
 	    <div class="col-6">
-	    <center><h3 style="margin-top: -20px">Search Patient</h3></center><br>
+	    <center><h3 style="margin-top: -20px">Update Patient</h3></center><br>
 	    	<form id="myForm" action="UpdatePatient" method='POST'>
-		    	<table class="table table-borderless" id="myTable">
+		    	<table class="table table-borderless">
 				    <tr>
 				      <th scope="col" class="first">Patient Id: <span style="color:red">*</span></th>
 				      <th scope="col"><input style="width: 100%" type="number" id="pat_id" name="pat_id" min="100000000" max="999999999" required></th>
-				      <th style="display: none"><button type="button" style="width: 100%; line-height: 15px;" id="get" name="get" class="btn btn-dark">Get</button></th>
+				      <th><button type="button" style="width: 100%; line-height: 15px;" id="get" name="get" class="btn btn-dark">Get</button></th>
 				    </tr>
-				    <tr style="display: none">
+				    <tr>
 				      <th scope="col" class="first">Patients Name: </th>
 				      <th scope="col"><input style="width: 100%" type="text" id="name" name="name"></th>
 				    </tr>
-				    <tr style="display: none">
+				    <tr>
 				      <th scope="col" class="first">Patient Age: </th>
 				      <th scope="col"><input style="width: 100%" type="number" id="age" name="age" min="1" max="150"></th>
 				    </tr>
-				    <tr style="display: none">
+				    <tr>
 				      <th scope="col" class="first">Date of Admission: </th>
 				      <th scope="col"><input style="width: 100%" type="date" id="date" name="date"></th>
 				    </tr>
-				    <tr style="display: none">
+				    <tr>
 				      <th scope="col" class="first">Type of bed: </th>
 				      <th scope="col">
 				      	<select id="bed" name="bed">
@@ -198,11 +183,11 @@ body{
 						  </select>
 				      </th>
 				    </tr>
-				    <tr style="display: none">
+				    <tr>
 				      <th scope="col" class="first">Address: </th>
 				      <th scope="col"><textarea style="width: 100%" type="text" id="address" name="address"></textarea></th>
 				    </tr>
-				    <tr style="display: none">
+				    <tr>
 				      <th scope="col" class="first">State: </th>
 				      <th scope="col">
 					      <select id="state" name="state">
@@ -213,7 +198,7 @@ body{
 						  </select>
 					 </th>
 				    </tr>
-				    <tr style="display: none">
+				    <tr>
 				      <th scope="col" class="first">City: </th>
 				      <th scope="col">
 				      	<select id="city" name="city">
@@ -226,15 +211,13 @@ body{
 				    </tr>
 				    <tr><th colspan="2"><span style="color: red">(*)Fields are mandatory</span></th></tr> 
 				</table>
-				<center><button type="button" style="width: 40%;margin-top: 40px" id="search" name="search" class="btn btn-dark">Search</button></center>
+				<center><button type="submit" style="width: 40%;margin-top: 40px" id="update" name="update" class="btn btn-dark">Update</button></center>
 			</form>
-			<%HttpSession sess = request.getSession(); sess.setAttribute("search", "search"); sess.setAttribute("update", null);%>
 	    </div>
     	<div class="col-3"></div>
   	</div>
   </div>
-</div>
- -->
+</div>-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </body>
 </html>

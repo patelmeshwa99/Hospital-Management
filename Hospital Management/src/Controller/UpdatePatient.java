@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -21,10 +22,28 @@ public class UpdatePatient extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		HttpSession sess = request.getSession();
+	
 		if(request.getParameter("pat_id")==null || request.getParameter("pat_id").equals("")) 
 		{	
-			RequestDispatcher rd = request.getRequestDispatcher("UpdatePatient.jsp");
-			rd.include(request, response);
+			System.out.println("id null");
+			if(sess.getAttribute("search").equals("search")){
+				sess.setAttribute("search", "");
+				RequestDispatcher rd = request.getRequestDispatcher("SearchPatient.jsp");
+				rd.include(request, response);
+			}
+			else {
+				if(sess.getAttribute("update").equals("update")){
+					sess.setAttribute("update", "");
+					RequestDispatcher rd = request.getRequestDispatcher("UpdatePatient.jsp");
+					rd.include(request, response);
+				}
+				else
+				{
+					RequestDispatcher rd = request.getRequestDispatcher("DeletePatient.jsp");
+					rd.include(request, response);
+				}
+			}
 		}
 		else 
 		{
@@ -52,11 +71,54 @@ public class UpdatePatient extends HttpServlet {
 			        System.out.println("innn");
 					response.getWriter().write(json.toString());	
 				}
+				else
+				{
+					System.out.println("not found");
+					if(sess.getAttribute("search")=="search") {
+						response.sendRedirect("SearchPatient.jsp");
+					}	
+				}
 			}
 			else
 			{
 				PrintWriter out1 = response.getWriter();
-				if(request.getParameter("update")==null) {
+				if(request.getParameter("update")!=null) {
+					System.out.println("in updateee");
+					PatientBean pb = new PatientBean();
+					
+					pb.setName(request.getParameter("name"));
+					pb.setAge(Integer.parseInt(request.getParameter("age")));
+					pb.setDate(request.getParameter("date"));
+					pb.setBed(request.getParameter("bed"));
+					pb.setAddress(request.getParameter("address"));
+					pb.setState(request.getParameter("state"));
+					pb.setCity(request.getParameter("city"));
+					
+					int rows_affected = ps.updatePatient(pb, id);
+					
+					if(rows_affected == 1) {
+						out1.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js'></script>");
+						out1.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+						out1.println("<script>");
+						out1.println("$(document).ready(function(){");
+						out1.println("swal ( '', 'Updated Successfully!!', 'success');");
+						out1.println("});");
+						out1.println("</script>");
+					}
+					else
+					{
+						out1.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js'></script>");
+						out1.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+						out1.println("<script>");
+						out1.println("$(document).ready(function(){");
+						out1.println("swal ( '', 'Updation failed!!', 'error');");
+						out1.println("});");
+						out1.println("</script>");
+						
+					}
+				}
+				else
+				{
 					System.out.println("in deleteee");
 					int rows_affected = ps.deletePatient(id);
 					
@@ -82,45 +144,26 @@ public class UpdatePatient extends HttpServlet {
 						
 					}
 				}
-				else
-				{
-					System.out.println("in updateee");
-					PatientBean pb = new PatientBean();
-					
-					pb.setName(request.getParameter("name"));
-					pb.setAge(Integer.parseInt(request.getParameter("age")));
-					pb.setDate(request.getParameter("date"));
-					pb.setBed(request.getParameter("bed"));
-					pb.setAddress(request.getParameter("address"));
-					pb.setState(request.getParameter("state"));
-					pb.setCity(request.getParameter("city"));
-					
-					int rows_affected = ps.updatePatient(pb, id);
-				
-					if(rows_affected == 1) {
-						out1.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js'></script>");
-						out1.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
-						out1.println("<script>");
-						out1.println("$(document).ready(function(){");
-						out1.println("swal ( '', 'Updated Successfully!!', 'success');");
-						out1.println("});");
-						out1.println("</script>");
+				if(sess.getAttribute("search").equals("search")){
+					sess.setAttribute("search", "");
+					RequestDispatcher rd = request.getRequestDispatcher("SearchPatient.jsp");
+					rd.include(request, response);
+				}
+				else {
+					if(sess.getAttribute("update").equals("update")){
+						sess.setAttribute("update", "");
+						RequestDispatcher rd = request.getRequestDispatcher("UpdatePatient.jsp");
+						rd.include(request, response);
 					}
 					else
 					{
-						out1.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js'></script>");
-						out1.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
-						out1.println("<script>");
-						out1.println("$(document).ready(function(){");
-						out1.println("swal ( '', 'Updation failed!!', 'error');");
-						out1.println("});");
-						out1.println("</script>");
-						
+						RequestDispatcher rd = request.getRequestDispatcher("DeletePatient.jsp");
+						rd.include(request, response);
 					}
 				}
-				RequestDispatcher rd = request.getRequestDispatcher("UpdatePatient.jsp");
-				rd.include(request, response);
-			}
+		
+			}	
 		}
 	}
 }
+	

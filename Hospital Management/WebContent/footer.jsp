@@ -12,35 +12,30 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <style>
   
-  .navbar-toggler {
-    padding: .1rem .1rem;
-}
-  
-  @media only screen and (max-width: 1400px) {
+  @media only screen and (max-width: 480px) {
    	.navbar-brand {
-    	font-weight:bold;
-    	letter-spacing: 1px;
+    	font-size: 1rem !important;
     }
 }
 
-  @media only screen and (max-width: 770px) {
-  .navbar-brand {
-  		font-size: 1.24rem !important;
-  	}
-}
 
-  @media only screen and (max-width: 561px) {
+  @media only screen and (max-width: 375px) {
    	.navbar-brand {
-    	font-size: 1.039rem !important;
+    	font-size: 0.778rem !important;
     }
 }
 
+ @media only screen and (max-width: 992px) {
+   	.navbar-brand {
+    	font-size: 1.18rem !important;
+    }
+}
 
   </style>
 </head>
 <body>
 <div class="container rounded bg-dark text-white" style="margin-top:20px;">
-	<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
    		<div class="navbar-header">
 	      <a class="navbar-brand" href="#">
 	      	<img src="images/download.png" class="logo" style="width:30px;">
@@ -62,8 +57,7 @@
 			        <a class="dropdown-item" href="CreatePatient.jsp">Register Patient</a>
 			        <a class="dropdown-item" href="UpdatePatient.jsp">Update Patient</a>
 			        <a class="dropdown-item" href="DeletePatient.jsp">Delete Patient</a>
-			        <a class="dropdown-item" href="SearchPatient.jsp">Search Patient</a>
-			        <a class="dropdown-item" href="ViewPatients.jsp">View Patients</a>
+			        <a class="dropdown-item" href="ViewPatients.jsp">View Patient</a>
 			      </div>
 			    </li>
 			    <li class="nav-item dropdown">
@@ -71,7 +65,7 @@
 			        Pharmacy
 			      </a>
 			      <div class="dropdown-menu">
-			        <a class="dropdown-item" href="IssueMedicines.jsp">Issue Medicines</a>
+			        <a class="dropdown-item" href="#">Link 1</a>
 			        <a class="dropdown-item" href="#">Link 2</a>
 			        <a class="dropdown-item" href="#">Link 3</a>
 			      </div>
